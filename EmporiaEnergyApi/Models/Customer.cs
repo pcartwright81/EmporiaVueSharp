@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace EmporiaEnergyApi
+namespace EmporiaEnergyApi.Models
 {
     public class Customer
     {
@@ -19,5 +19,8 @@ namespace EmporiaEnergyApi
 
         [JsonProperty("createdAt")]
         public DateTimeOffset CreatedAt { get; set; }
+
+        [JsonProperty("devices")]
+        public Device[] Devices { get; set; }
     }
 }
