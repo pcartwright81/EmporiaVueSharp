@@ -24,6 +24,6 @@ namespace EmporiaEnergyApi.Models
         public long DeviceGid { get; set; }
 
         [JsonProperty("usage")]
-        public double[] Usage { get; set; }
+        public double?[] Usage { get; set; }
     }
 }

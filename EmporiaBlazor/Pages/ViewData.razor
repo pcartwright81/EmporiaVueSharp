@@ -1,0 +1,60 @@
+﻿@page "/viewData"
+@using EmporiaEnergyApi
+@using EmporiaEnergyApi.Models
+@using Microsoft.Extensions.Configuration
+@inject IEmporiaApi EmporiaApi
+@inject IConfiguration Configuration;
+<h1>Usage Over Time</h1>
+
+<p>Shows Emporia usage over a given time.</p>
+
+@if (_usage == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date Time</th>
+                <th>Usage in KW</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var counter = _usage.Start.LocalDateTime;
+                foreach (var usage in _usage.Usage)
+                {
+                    <tr>
+                        <td>@counter.ToString("G")</td>
+                        <td>@(usage/1000)</td>
+                        @{
+                            counter = _usage.Scale switch
+                            {
+                                "1S" => counter.AddSeconds(1),
+                                "1MIN" => counter.AddMinutes(1),
+                                "15MIN" => counter.AddMinutes(15),
+                                "1H" => counter.AddHours(1),
+                                _ => counter
+                                };
+                        }
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+}
+
+@code {
+    private UsageByTimeRange _usage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await EmporiaApi.Login();
+        var customer = await EmporiaApi.GetCustomerInfoAsync(Configuration["UserName"]);
+        var customerWithDevices = await EmporiaApi.GetCustomerWithDevicesAsync(customer.CustomerGid);
+        _usage = await EmporiaApi.GetUsageByTimeRangeAsync(customerWithDevices.Devices[0].DeviceGid, DateTime.Now.AddDays(-15), DateTime.Now.ToUniversalTime().AddMinutes(-10), "1H", "WATTS");
+    }
+}
