@@ -27,8 +27,10 @@ namespace EmporiaEnergyApi
             var usagePerDay = usageSinceLastBill / (DateTime.Now - billDate).TotalDays; //get the total days since last bill
             const double kwCost = .09;
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
-            var totalBill = usagePerDay * totalBillDays * kwCost;
-            Console.WriteLine($"Total bill will be {totalBill}");
+            var estimatedUsage = usagePerDay * totalBillDays;
+            Console.WriteLine($"Usage since last bill is {usageSinceLastBill:F}");
+            Console.WriteLine($"Estimated usage is {estimatedUsage:F}");
+            Console.WriteLine($"Total estimated bill is {estimatedUsage * kwCost:F}");
         }
     }
 }
