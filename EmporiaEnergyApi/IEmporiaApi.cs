@@ -16,7 +16,7 @@ namespace EmporiaEnergyApi
         ///     Checks the api to see if it is in maintenance.
         /// </summary>
         /// <returns></returns>
-        Task<bool> IsMaintenance();
+        Task<bool> IsMaintenanceAsync();
 
         /// <summary>
         ///     Gets the customer information from the API.

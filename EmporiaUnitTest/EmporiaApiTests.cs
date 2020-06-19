@@ -12,11 +12,20 @@ namespace EmporiaUnitTest
         private IEmporiaApi Api { get; }
 
         private readonly IConfiguration _configuration;
+
         public EmporiaApiTests()
         {
             var builder = new ConfigurationBuilder().AddUserSecrets<EmporiaApiTests>();
             _configuration = builder.Build();
             Api = new EmporiaApi(_configuration);
+        }
+
+        [TestMethod]
+        public async Task TestIsMaintenance()
+        {
+            var maintenance = await Api.IsMaintenanceAsync();
+            Assert.IsFalse(maintenance);
+
         }
 
         [TestMethod]

@@ -6,10 +6,10 @@ namespace EmporiaEnergyApi.Models
     public class RecentUsage
     {
         [JsonProperty("start")]
-        public DateTimeOffset Start { get; set; }
+        public DateTime Start { get; set; }
 
         [JsonProperty("end")]
-        public DateTimeOffset End { get; set; }
+        public DateTime End { get; set; }
 
         [JsonProperty("scale")]
         public string Scale { get; set; }

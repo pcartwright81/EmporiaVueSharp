@@ -17,14 +17,14 @@ namespace EmporiaEnergyApi
             {
                 Console.WriteLine("Login Failed");
             }
-            var customer = await api.GetCustomerInfoAsync(config["UserName"]);
+            var customer = await api.GetCustomerInfoAsync(config["EmporiaUserName"]);
             var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             var billDate = new DateTime(2020, 05, 27);
             var dtNow = DateTime.Now;
             var usageByTime = await api.GetUsageByTimeRangeAsync(customerWithDevices.Devices[0].DeviceGid, billDate,
                 dtNow, "1H", "WATTS");
             var usageSinceLastBill = usageByTime.Usage.Sum() / 1000; //add all and convert to KW
-            var usagePerDay = usageSinceLastBill / (DateTime.Now - billDate).TotalDays; //get the total days since last bill
+            var usagePerDay = usageSinceLastBill / (DateTime.UtcNow - billDate).TotalDays; //get the total days since last bill
             const double kwCost = .09;
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
             var estimatedUsage = usagePerDay * totalBillDays;

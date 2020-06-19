@@ -18,7 +18,7 @@ namespace EmporiaEnergyApi.Models
         public string LastName { get; set; }
 
         [JsonProperty("createdAt")]
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [JsonProperty("devices")]
         public Device[] Devices { get; set; }

@@ -6,7 +6,7 @@ namespace EmporiaEnergyApi.Models
     public class TotalUsageForTimeFrame
     {
         [JsonProperty("timeframeStart")]
-        public DateTimeOffset TimeFrameStart { get; set; }
+        public DateTime TimeFrameStart { get; set; }
 
         [JsonProperty("timeframe")]
         public string TimeFrame { get; set; }

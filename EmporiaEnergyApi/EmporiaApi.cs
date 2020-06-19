@@ -22,8 +22,8 @@ namespace EmporiaEnergyApi
 
         public EmporiaApi(IConfiguration configuration)
         {
-            UserName = configuration["UserName"];
-            Password = configuration["Password"];
+            UserName = configuration["EmporiaUserName"];
+            Password = configuration["EmporiaPassword"];
         }
 
         /// <summary>
@@ -67,14 +67,12 @@ namespace EmporiaEnergyApi
         ///     Checks the api to see if it is in maintenance.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> IsMaintenance()
+        public async Task<bool> IsMaintenanceAsync()
         {
             const string url = "https://s3.amazonaws.com/com.emporiaenergy.manual.ota/maintenance/maintenance.json";
             var client = new HttpClient();
             using var response = await client.GetAsync(url);
-            using var content = response.Content;
-            var json = await content.ReadAsStringAsync();
-            return json.Contains("down");
+            return !response.IsSuccessStatusCode;
         }
 
         /// <summary>
