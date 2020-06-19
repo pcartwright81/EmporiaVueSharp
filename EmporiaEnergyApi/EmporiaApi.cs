@@ -22,8 +22,8 @@ namespace EmporiaEnergyApi
 
         public EmporiaApi(IConfiguration configuration)
         {
-            UserName = configuration["EmporiaUserName"];
-            Password = configuration["EmporiaPassword"];
+            UserName = configuration["email"];
+            Password = configuration["password"];
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace EmporiaEnergyApi
             const string url = "https://s3.amazonaws.com/com.emporiaenergy.manual.ota/maintenance/maintenance.json";
             var client = new HttpClient();
             using var response = await client.GetAsync(url);
-            return !response.IsSuccessStatusCode;
+            return response.IsSuccessStatusCode;
         }
 
         /// <summary>

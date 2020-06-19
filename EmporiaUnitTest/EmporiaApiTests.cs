@@ -39,7 +39,7 @@ namespace EmporiaUnitTest
         {
             var b = await Api.Login();
             Assert.IsTrue(b, "Login Failed");
-            var customer = await Api.GetCustomerInfoAsync(_configuration["UserName"]);
+            var customer = await Api.GetCustomerInfoAsync(_configuration["email"]);
             return customer.CustomerGid;
         }
 
@@ -48,7 +48,7 @@ namespace EmporiaUnitTest
         {
             var b = await Api.Login();
             Assert.IsTrue(b, "Login Failed");
-            var customer = await Api.GetCustomerInfoAsync(_configuration["UserName"]);
+            var customer = await Api.GetCustomerInfoAsync(_configuration["email"]);
             var customerWithDevices = await Api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             Assert.IsNotNull(customerWithDevices.Email);
         }
@@ -65,7 +65,7 @@ namespace EmporiaUnitTest
         {
             var b = await Api.Login();
             Assert.IsTrue(b, "Login Failed");
-            var customer = await Api.GetCustomerInfoAsync(_configuration["UserName"]);
+            var customer = await Api.GetCustomerInfoAsync(_configuration["email"]);
             var customerWithDevices = await Api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             return customerWithDevices.Devices[0].DeviceGid;
         }

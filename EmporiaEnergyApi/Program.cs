@@ -17,7 +17,7 @@ namespace EmporiaEnergyApi
             {
                 Console.WriteLine("Login Failed");
             }
-            var customer = await api.GetCustomerInfoAsync(config["EmporiaUserName"]);
+            var customer = await api.GetCustomerInfoAsync(config["email"]);
             var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             var billDate = new DateTime(2020, 05, 27);
             var dtNow = DateTime.Now;

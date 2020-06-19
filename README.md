@@ -1,10 +1,10 @@
 # EmporiaEnergy
 C# Port of PyEmVue
-Has all of the methods described and most of the functionality.
 
-Requires secrets like this:
+Right click on project and manage user secrets.
 
+Requires the following tokens in user secrets.
 {
-  "UserName": "UserName",
-  "Password": "Password"
+    "email": "you@email.com",
+    "password": "password"
 }

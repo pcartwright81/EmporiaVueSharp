@@ -22,7 +22,7 @@ namespace EmporiaBlazor.Data
         public async Task<List<EmporiaUsage>> GetUsageData(string scale)
         {
             await Api.Login();
-            var customer = await Api.GetCustomerInfoAsync(Configuration["EmporiaUsername"]);
+            var customer = await Api.GetCustomerInfoAsync(Configuration["email"]);
             var customerWithDevices = await Api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             var usageList = await Api.GetUsageByTimeRangeAsync(customerWithDevices.Devices[0].DeviceGid,
                 DateTime.UtcNow.AddDays(-2).Date, DateTime.Now.ToUniversalTime(), scale, "WATTS");
