@@ -1,4 +1,4 @@
-# EmporiaEnergy
+# EmporiaVueSharp
 C# Port of PyEmVue
 
 Right click on project and manage user secrets.
