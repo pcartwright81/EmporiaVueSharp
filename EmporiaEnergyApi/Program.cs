@@ -30,6 +30,7 @@ namespace EmporiaEnergyApi
             var estimatedUsage = usagePerDay * totalBillDays;
             Console.WriteLine($"Usage since last bill is {usageSinceLastBill:F}");
             Console.WriteLine($"Estimated usage is {estimatedUsage:F}");
+            Console.WriteLine($"Average usage per day is {usagePerDay:F}");
             Console.WriteLine($"Total estimated bill is {estimatedUsage * kwCost:F}");
         }
     }
