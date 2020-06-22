@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using EmporiaVue.Api;
 using Microsoft.Extensions.Configuration;
 
-namespace EmporiaVue.Console
+namespace EmporiaVue.TestConsole
 {
     internal class Program
     {
@@ -20,8 +20,13 @@ namespace EmporiaVue.Console
             }
             var customer = await api.GetCustomerInfoAsync(config["email"]);
             var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);
-            var billDate = new DateTime(2020, 05, 27);
             var dtNow = DateTime.Now;
+            var month = dtNow.Month;
+            if (dtNow.Day <= 27)
+            {
+                month = dtNow.Month - 1;
+            }
+            var billDate = new DateTime(2020, month, 27);
             var usageByTime = await api.GetUsageByTimeRangeAsync(customerWithDevices.Devices[0].DeviceGid, billDate,
                 dtNow, "1H", "WATTS");
             var usageSinceLastBill = usageByTime.Usage.Sum() / 1000; //add all and convert to KW
@@ -29,10 +34,10 @@ namespace EmporiaVue.Console
             const double kwCost = .09;
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
             var estimatedUsage = usagePerDay * totalBillDays;
-            System.Console.WriteLine($"Usage since last bill is {usageSinceLastBill:F}");
-            System.Console.WriteLine($"Estimated usage is {estimatedUsage:F}");
-            System.Console.WriteLine($"Average usage per day is {usagePerDay:F}");
-            System.Console.WriteLine($"Total estimated bill is {estimatedUsage * kwCost:F}");
+            Console.WriteLine($"Usage since last bill is {usageSinceLastBill:F}");
+            Console.WriteLine($"Estimated usage is {estimatedUsage:F}");
+            Console.WriteLine($"Average usage per day is {usagePerDay:F}");
+            Console.WriteLine($"Total estimated bill is {estimatedUsage * kwCost:F}");
         }
     }
 }
