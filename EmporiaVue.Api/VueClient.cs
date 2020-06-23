@@ -26,6 +26,12 @@ namespace EmporiaVue.Api
             Password = configuration["password"];
         }
 
+        public VueClient(string userName, string password)
+        {
+            UserName = userName;
+            Password = password;
+        }
+
         /// <summary>
         ///     The username that is set by user secrets.
         /// </summary>

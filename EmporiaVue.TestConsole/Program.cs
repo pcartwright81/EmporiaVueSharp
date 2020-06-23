@@ -16,7 +16,7 @@ namespace EmporiaVue.TestConsole
             var login = await api.Login();
             if (!login)
             {
-                System.Console.WriteLine("Login Failed");
+                Console.WriteLine("Login Failed");
             }
             var customer = await api.GetCustomerInfoAsync(config["email"]);
             var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);

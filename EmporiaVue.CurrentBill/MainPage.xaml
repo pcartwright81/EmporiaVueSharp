@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EmporiaVue.CurrentBill.MainPage" Title="Main Page">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+            <Label Text="Usage since last bill:"/>
+            <Entry x:Name="Usage" IsReadOnly="True"></Entry>
+            <Label Text="Estimated usage:"/>
+            <Entry x:Name="Estimated" IsReadOnly="True"></Entry>
+            <Label Text="Average usage per day:"/>
+            <Entry x:Name="Average"  IsReadOnly="True"></Entry>
+            <Label Text="Total estimated bill:"/>
+            <Entry x:Name="Total"  IsReadOnly="True"></Entry>
+            <Button Text="Refresh" Clicked="OnRefreshButtonClicked" />
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>
