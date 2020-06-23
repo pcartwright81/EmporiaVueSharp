@@ -6,7 +6,7 @@
 			<Entry x:Name="UsernameEntry" Placeholder="username" />
 			<Label Text="Password" />
 			<Entry x:Name="PasswordEntry" IsPassword="true" />
-			<Button Text="Login" Clicked="OnLoginButtonClicked" />
+			<Button x:Name="LoginButton" Text="Login"/>
 			<Label x:Name="MessageLabel" />
 		</StackLayout>
 	</ContentPage.Content>

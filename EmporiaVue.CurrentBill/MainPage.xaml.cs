@@ -15,6 +15,8 @@ namespace EmporiaVue.CurrentBill
         public MainPage()
         {
             InitializeComponent();
+            LogoutButton.Clicked += OnLogoutButtonClicked;
+            RefreshButton.Clicked += OnRefreshButtonClicked;
             TokenSource2 = new CancellationTokenSource();
             Task.Run(GetData, TokenSource2.Token);
         }
@@ -30,18 +32,9 @@ namespace EmporiaVue.CurrentBill
 
         private async Task GetData()
         {
-            string userName;
-            string password;
-            try
-            {
-                userName = await SecureStorage.GetAsync("UserName");
-                password = await SecureStorage.GetAsync("Password");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error Loading:{ex.Message}.");
-                return;
-            }
+            var userName = await SecureStorage.GetAsync("UserName");
+            var password = await SecureStorage.GetAsync("Password");
+           
             var api = new VueClient(userName, password);
             var login = await api.Login();
             if (!login)
