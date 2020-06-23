@@ -53,7 +53,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations">
-      <Version>2020.1.0</Version>
+      <Version>2020.2.0-eap</Version>
+    </PackageReference>
+    <PackageReference Include="Validation">
+      <Version>2.4.22</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
   </ItemGroup>
