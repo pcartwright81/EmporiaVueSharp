@@ -82,37 +82,87 @@ namespace EmporiaVue.CurrentBill
             Task.Run(GetData, TokenSource2.Token);
         }
 
+        public long CustomerGid
+        {
+            get
+            {
+                const string key = "CustomerGid";
+                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
+                if (long.TryParse(customerGidStr, out var customerGid))
+                {
+                    return customerGid;
+                }
+
+                var userName = SecureStorage.GetAsync("UserName").GetAwaiter().GetResult();
+                var customer = ClientVue.GetCustomerInfoAsync(userName).GetAwaiter().GetResult();
+                SecureStorage.SetAsync(key, customer.CustomerGid.ToString()).GetAwaiter().GetResult();
+                return customer.CustomerGid;
+            }
+        }
+
+        public long DeviceGid
+        {
+            get
+            {
+                const string key = "DeviceGid";
+                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
+                if (long.TryParse(customerGidStr, out var customerGid))
+                {
+                    return customerGid;
+                }
+                var customerWithDevices = ClientVue.GetCustomerWithDevicesAsync(CustomerGid).GetAwaiter().GetResult();
+                var deviceGid = customerWithDevices.Devices[0].DeviceGid;
+                SecureStorage.SetAsync(key, deviceGid.ToString()).GetAwaiter().GetResult();
+                return deviceGid;
+            }
+        }
+
+        public long KwCost
+        {
+            get
+            {
+                const string key = "KWCost";
+                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
+                if (long.TryParse(customerGidStr, out var customerGid))
+                {
+                    return customerGid;
+                }
+                var locationInfo = ClientVue.GetDeviceLocationInfoAsync(DeviceGid).GetAwaiter().GetResult();
+                var kwCost = locationInfo.UsageCentPerKwHour;
+                SecureStorage.SetAsync(key, kwCost.ToString()).GetAwaiter().GetResult();
+                return kwCost;
+            }
+        }
+
+        public VueClient ClientVue { get; set; }
         private async Task GetData()
         {
             var userName = await SecureStorage.GetAsync("UserName");
             var password = await SecureStorage.GetAsync("Password");
 
-            var api = new VueClient(userName, password);
-            var login = await api.Login();
-            if (!login) Console.WriteLine("Login Failed");
-
-            if (TokenSource2.IsCancellationRequested) return;
-            var customer = await api.GetCustomerInfoAsync(userName);
-            var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);
-            if (TokenSource2.IsCancellationRequested) return;
+            ClientVue = new VueClient(userName, password);
+            var login = await ClientVue.Login();
+            if (!login)
+            {
+                throw new Exception("Login Failed");
+            }
+            
             var dtNow = DateTime.Now;
             var month = dtNow.Month;
             if (dtNow.Day <= 27) month = dtNow.Month - 1;
             var billDate = new DateTime(2020, month, 27);
-            if (TokenSource2.IsCancellationRequested) return;
-            var usageByTime = await api.GetUsageByTimeRangeAsync(customerWithDevices.Devices[0].DeviceGid, billDate,
+            var usageByTime = await ClientVue.GetUsageByTimeRangeAsync(DeviceGid, billDate,
                 dtNow, "1H", "WATTS");
-
+           
             var usageSinceLastBill = usageByTime.Usage.Sum() / 1000; //add all and convert to KW
             var usagePerDay =
-                usageSinceLastBill / (DateTime.UtcNow - billDate).TotalDays; //get the total days since last bill
-            const double kwCost = .09;
+                usageSinceLastBill / (DateTime.UtcNow - billDate).TotalDays; //divide the usage per day and divide by the total days since last bill
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
             var estimatedUsage = usagePerDay * totalBillDays;
             Usage = $"{usageSinceLastBill:F}";
             Estimated = $"{estimatedUsage:F}";
             Average = $"{usagePerDay:F}";
-            Total = $"{estimatedUsage * kwCost:F}";
+            Total = $"{estimatedUsage * KwCost / 100:F}";
         }
 
         private async void LogoutAsync()
