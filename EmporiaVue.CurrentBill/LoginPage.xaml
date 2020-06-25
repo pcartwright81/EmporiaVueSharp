@@ -1,12 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EmporiaVue.CurrentBill.LoginPage" Title="Login">	
-	<ContentPage.Content>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:currentBill="clr-namespace:EmporiaVue.CurrentBill;assembly=EmporiaVue.CurrentBill"
+             x:Class="EmporiaVue.CurrentBill.LoginPage" Title="Login">
+    <ContentPage.BindingContext>
+        <currentBill:LoginViewModel />
+    </ContentPage.BindingContext>
+<ContentPage.Content>
 		<StackLayout VerticalOptions="StartAndExpand">
 			<Label Text="Username" />
-			<Entry x:Name="UsernameEntry" Placeholder="username" />
+			<Entry Placeholder="username" Text="{Binding UserName}"/>
 			<Label Text="Password" />
-			<Entry x:Name="PasswordEntry" IsPassword="true" />
-			<Button x:Name="LoginButton" Text="Login"/>
+            <Entry IsPassword="true" Text="{Binding Password}"/>
+			<Button Text="Login" Command="{Binding LoginCommand}"/>
 			<Label x:Name="MessageLabel" />
 		</StackLayout>
 	</ContentPage.Content>

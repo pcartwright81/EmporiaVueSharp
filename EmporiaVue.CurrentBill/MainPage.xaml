@@ -1,19 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EmporiaVue.CurrentBill.MainPage" Title="Main Page">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:currentBill="clr-namespace:EmporiaVue.CurrentBill;assembly=EmporiaVue.CurrentBill"
+             x:Class="EmporiaVue.CurrentBill.MainPage" Title="Main Page">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="LogoutButton"  Text="Logout" />
+		<ToolbarItem  Text="Logout" Command="{Binding LogoutCommand}" />
 	</ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <currentBill:MainViewModel />
+    </ContentPage.BindingContext>
 	<ContentPage.Content>
 		<StackLayout>
             <Label Text="Usage since last bill:"/>
-            <Entry x:Name="Usage" IsReadOnly="True"></Entry>
+            <Entry Text="{Binding Usage}" IsReadOnly="True"></Entry>
             <Label Text="Estimated usage:"/>
-            <Entry x:Name="Estimated" IsReadOnly="True"></Entry>
+            <Entry Text="{Binding Estimated}" IsReadOnly="True"></Entry>
             <Label Text="Average usage per day:"/>
-            <Entry x:Name="Average"  IsReadOnly="True"></Entry>
+            <Entry Text="{Binding Average}"  IsReadOnly="True"></Entry>
             <Label Text="Total estimated bill:"/>
-            <Entry x:Name="Total"  IsReadOnly="True"></Entry>
-            <Button x:Name="RefreshButton" Text="Refresh" />
+            <Entry Text="{Binding Total}"  IsReadOnly="True"></Entry>
+            <Button Text="Refresh" Command="{Binding RefreshCommand}" />
         </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
