@@ -93,5 +93,30 @@ namespace EmporiaVue.Tests
             var recentUsage = await Client.GetRecentDeviceUsageAsync(customerId, DateTime.Now, "1MON", "WATTS");
             Assert.IsNotNull(recentUsage.CustomerGid);
         }
+
+        [TestMethod]
+        public async Task TestEstimatedUsage()
+        {
+            var firstDeviceId = await GetFirstDeviceId();
+            var location = await Client.GetDeviceLocationInfoAsync(firstDeviceId);
+            var recentUsage = await Client.EstimateNextBill(firstDeviceId, 27, location.UsageCentPerKwHour);
+            Assert.AreNotEqual(0, recentUsage.EstimatedCost);
+        }
+
+        [TestMethod]
+        public void TestLastBillDate()
+        {
+            const int day = 27;
+            var dtNow = DateTime.UtcNow;
+            var month = dtNow.Month;
+            if (dtNow.Day <= day)
+            {
+                month = dtNow.Month - 1;
+            }
+
+            var billDate = new DateTime(2020, month, day);
+            var testBillDate = Client.GetLastBillDate(day);
+            Assert.AreEqual(billDate, testBillDate);
+        }
     }
 }

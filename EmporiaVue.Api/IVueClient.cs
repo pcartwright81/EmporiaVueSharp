@@ -69,5 +69,21 @@ namespace EmporiaVue.Api
         /// <returns></returns>
         Task<RecentUsage> GetRecentDeviceUsageAsync(long customerGid, DateTime dateToCheck,
             string scale, string unit);
+
+        /// <summary>
+        ///     Gets the total estimated usage since the last bill.
+        /// </summary>
+        /// <param name="deviceGid">The device gid.</param>
+        /// <param name="billDay">The day the bill is given.</param>
+        /// <param name="costPerKwHour">The cost per kw.</param>
+        /// <returns></returns>
+        Task<NextBillEstimate> EstimateNextBill(long deviceGid, int billDay,
+            long costPerKwHour);
+
+        /// <summary>
+        ///     Gets the last bill date.
+        /// </summary>
+        /// <returns></returns>
+        DateTime GetLastBillDate(int day);
     }
 }

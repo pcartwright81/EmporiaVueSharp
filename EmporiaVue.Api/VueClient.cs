@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Amazon;
@@ -189,6 +190,40 @@ namespace EmporiaVue.Api
             url = url.Replace(":", "%3A");
             var recentUsage = await MakeRequest<RecentUsage>(url);
             return recentUsage;
+        }
+
+        /// <summary>
+        ///     Gets the total estimated usage since the last bill.
+        /// </summary>
+        /// <param name="deviceGid">The device gid.</param>
+        /// <param name="billDay">The day the bill is given.</param>
+        /// <param name="costPerKwHour">The cost per kw.</param>
+        /// <returns></returns>
+        public async Task<NextBillEstimate> EstimateNextBill(long deviceGid, int billDay,
+            long costPerKwHour)
+        {
+            var dtNow = DateTime.UtcNow;
+            var billDate = GetLastBillDate(billDay);
+            var usage = new NextBillEstimate();
+            var usageByTime = await GetUsageByTimeRangeAsync(deviceGid, billDate, dtNow, "1H", "WATTS");
+            usage.UsageSinceDate = usageByTime.Usage.Sum().GetValueOrDefault() / 1000; //add all and convert to KW
+            usage.UsagePerDay = usage.UsageSinceDate / (dtNow - billDate).TotalDays; //get the total days since last bill
+            var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
+            usage.EstimatedUsage = usage.UsagePerDay * totalBillDays;
+            usage.EstimatedCost = usage.EstimatedUsage * costPerKwHour / 100;
+            return usage;
+        }
+
+        public DateTime GetLastBillDate(int day)
+        {
+            var dtNow = DateTime.UtcNow;
+            var month = dtNow.Month;
+            if (dtNow.Day <= day)
+            {
+                month = dtNow.Month - 1;
+            }
+
+            return new DateTime(2020, month, day);
         }
     }
 }

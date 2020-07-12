@@ -146,23 +146,12 @@ namespace EmporiaVue.CurrentBill
             {
                 throw new Exception("Login Failed");
             }
-            
-            var dtNow = DateTime.Now;
-            var month = dtNow.Month;
-            if (dtNow.Day <= 27) month = dtNow.Month - 1;
-            var billDate = new DateTime(2020, month, 27);
-            var usageByTime = await ClientVue.GetUsageByTimeRangeAsync(DeviceGid, billDate,
-                dtNow, "1H", "WATTS");
-           
-            var usageSinceLastBill = usageByTime.Usage.Sum() / 1000; //add all and convert to KW
-            var usagePerDay =
-                usageSinceLastBill / (DateTime.UtcNow - billDate).TotalDays; //divide the usage per day and divide by the total days since last bill
-            var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
-            var estimatedUsage = usagePerDay * totalBillDays;
-            Usage = $"{usageSinceLastBill:F}";
-            Estimated = $"{estimatedUsage:F}";
-            Average = $"{usagePerDay:F}";
-            Total = $"{estimatedUsage * KwCost / 100:F}";
+
+            var nextBill = await ClientVue.EstimateNextBill(DeviceGid, 27, KwCost);
+            Usage = $"{nextBill.UsageSinceDate:F}";
+            Estimated = $"{nextBill.EstimatedUsage:F}";
+            Average = $"{nextBill.UsagePerDay:F}";
+            Total = $"{nextBill.EstimatedCost:F}";
         }
 
         private async void LogoutAsync()
