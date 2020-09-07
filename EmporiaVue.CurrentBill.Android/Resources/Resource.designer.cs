@@ -1640,6 +1640,7 @@ namespace EmporiaVue.CurrentBill.Android
 			global::Xamarin.Forms.Platform.Android.Resource.String.fab_transformation_sheet_behavior = global::EmporiaVue.CurrentBill.Android.Resource.String.fab_transformation_sheet_behavior;
 			global::Xamarin.Forms.Platform.Android.Resource.String.hide_bottom_view_on_scroll_behavior = global::EmporiaVue.CurrentBill.Android.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::Xamarin.Forms.Platform.Android.Resource.String.mtrl_chip_close_icon_content_description = global::EmporiaVue.CurrentBill.Android.Resource.String.mtrl_chip_close_icon_content_description;
+			global::Xamarin.Forms.Platform.Android.Resource.String.overflow_tab_title = global::EmporiaVue.CurrentBill.Android.Resource.String.overflow_tab_title;
 			global::Xamarin.Forms.Platform.Android.Resource.String.password_toggle_content_description = global::EmporiaVue.CurrentBill.Android.Resource.String.password_toggle_content_description;
 			global::Xamarin.Forms.Platform.Android.Resource.String.path_password_eye = global::EmporiaVue.CurrentBill.Android.Resource.String.path_password_eye;
 			global::Xamarin.Forms.Platform.Android.Resource.String.path_password_eye_mask_strike_through = global::EmporiaVue.CurrentBill.Android.Resource.String.path_password_eye_mask_strike_through;
@@ -4318,6 +4319,7 @@ namespace EmporiaVue.CurrentBill.Android
 			global::Xamarin.Forms.Platform.Resource.String.fab_transformation_sheet_behavior = global::EmporiaVue.CurrentBill.Android.Resource.String.fab_transformation_sheet_behavior;
 			global::Xamarin.Forms.Platform.Resource.String.hide_bottom_view_on_scroll_behavior = global::EmporiaVue.CurrentBill.Android.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::Xamarin.Forms.Platform.Resource.String.mtrl_chip_close_icon_content_description = global::EmporiaVue.CurrentBill.Android.Resource.String.mtrl_chip_close_icon_content_description;
+			global::Xamarin.Forms.Platform.Resource.String.overflow_tab_title = global::EmporiaVue.CurrentBill.Android.Resource.String.overflow_tab_title;
 			global::Xamarin.Forms.Platform.Resource.String.password_toggle_content_description = global::EmporiaVue.CurrentBill.Android.Resource.String.password_toggle_content_description;
 			global::Xamarin.Forms.Platform.Resource.String.path_password_eye = global::EmporiaVue.CurrentBill.Android.Resource.String.path_password_eye;
 			global::Xamarin.Forms.Platform.Resource.String.path_password_eye_mask_strike_through = global::EmporiaVue.CurrentBill.Android.Resource.String.path_password_eye_mask_strike_through;
@@ -9983,25 +9985,28 @@ namespace EmporiaVue.CurrentBill.Android
 			public const int mtrl_chip_close_icon_content_description = 2131492900;
 			
 			// aapt resource value: 0x7F0C0025
-			public const int password_toggle_content_description = 2131492901;
+			public const int overflow_tab_title = 2131492901;
 			
 			// aapt resource value: 0x7F0C0026
-			public const int path_password_eye = 2131492902;
+			public const int password_toggle_content_description = 2131492902;
 			
 			// aapt resource value: 0x7F0C0027
-			public const int path_password_eye_mask_strike_through = 2131492903;
+			public const int path_password_eye = 2131492903;
 			
 			// aapt resource value: 0x7F0C0028
-			public const int path_password_eye_mask_visible = 2131492904;
+			public const int path_password_eye_mask_strike_through = 2131492904;
 			
 			// aapt resource value: 0x7F0C0029
-			public const int path_password_strike_through = 2131492905;
+			public const int path_password_eye_mask_visible = 2131492905;
 			
 			// aapt resource value: 0x7F0C002A
-			public const int search_menu_title = 2131492906;
+			public const int path_password_strike_through = 2131492906;
 			
 			// aapt resource value: 0x7F0C002B
-			public const int status_bar_notification_info_overflow = 2131492907;
+			public const int search_menu_title = 2131492907;
+			
+			// aapt resource value: 0x7F0C002C
+			public const int status_bar_notification_info_overflow = 2131492908;
 			
 			static String()
 			{

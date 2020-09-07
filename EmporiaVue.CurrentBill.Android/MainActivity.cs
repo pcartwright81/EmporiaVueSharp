@@ -1,14 +1,14 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using JetBrains.Annotations;
 using Xamarin.Forms.Platform.Android;
 
 namespace EmporiaVue.CurrentBill.Android
 {
 	[Activity (Label = "Current Electric Bill", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [UsedImplicitly]
     public class MainActivity : FormsAppCompatActivity
 	{
 		protected override void OnCreate (Bundle bundle)

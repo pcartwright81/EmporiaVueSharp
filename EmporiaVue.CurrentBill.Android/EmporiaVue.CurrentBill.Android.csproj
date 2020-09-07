@@ -60,7 +60,7 @@
     <PackageReference Include="Validation">
       <Version>2.4.22</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
