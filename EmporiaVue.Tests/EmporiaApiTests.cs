@@ -99,14 +99,14 @@ namespace EmporiaVue.Tests
         {
             var firstDeviceId = await GetFirstDeviceId();
             var location = await Client.GetDeviceLocationInfoAsync(firstDeviceId);
-            var recentUsage = await Client.EstimateNextBill(firstDeviceId, 27, location.UsageCentPerKwHour);
+            var recentUsage = await Client.EstimateNextBill(firstDeviceId, 23, location.UsageCentPerKwHour);
             Assert.AreNotEqual(0, recentUsage.EstimatedCost);
         }
 
         [TestMethod]
         public void TestLastBillDate()
         {
-            const int day = 27;
+            const int day = 25;
             var dtNow = DateTime.UtcNow;
             var month = dtNow.Month;
             if (dtNow.Day <= day)
@@ -114,7 +114,15 @@ namespace EmporiaVue.Tests
                 month = dtNow.Month - 1;
             }
 
-            var billDate = new DateTime(2020, month, day);
+            var year = dtNow.Year;
+            if (month == 0)
+            {
+                month = 12;
+                year -= 1;
+            }
+          
+
+            var billDate = new DateTime(year, month, day);
             var testBillDate = Client.GetLastBillDate(day);
             Assert.AreEqual(billDate, testBillDate);
         }

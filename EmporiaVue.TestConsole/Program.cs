@@ -21,7 +21,7 @@ namespace EmporiaVue.TestConsole
             var customerWithDevices = await api.GetCustomerWithDevicesAsync(customer.CustomerGid);
             var deviceGid = customerWithDevices.Devices[0].DeviceGid;
             var location = await api.GetDeviceLocationInfoAsync(deviceGid);
-            var nextBill = await api.EstimateNextBill(deviceGid, 27, location.UsageCentPerKwHour);
+            var nextBill = await api.EstimateNextBill(deviceGid, 25, location.UsageCentPerKwHour);
             Console.WriteLine($"Usage since last bill is {nextBill.UsageSinceDate:F}");
             Console.WriteLine($"Estimated usage is {nextBill.EstimatedUsage:F}");
             Console.WriteLine($"Average usage per day is {nextBill.UsagePerDay:F}");

@@ -223,7 +223,12 @@ namespace EmporiaVue.Api
                 month = dtNow.Month - 1;
             }
 
-            return new DateTime(2020, month, day);
+            var year = dtNow.Year;
+            if (month != 0) return new DateTime(year, month, day);
+            month = 12;
+            year -= 1;
+
+            return new DateTime(year, month, day);
         }
     }
 }

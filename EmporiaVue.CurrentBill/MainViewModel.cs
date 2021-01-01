@@ -147,7 +147,7 @@ namespace EmporiaVue.CurrentBill
                 throw new Exception("Login Failed");
             }
 
-            var nextBill = await ClientVue.EstimateNextBill(DeviceGid, 27, KwCost);
+            var nextBill = await ClientVue.EstimateNextBill(DeviceGid, 25, KwCost);
             Usage = $"{nextBill.UsageSinceDate:F}";
             Estimated = $"{nextBill.EstimatedUsage:F}";
             Average = $"{nextBill.UsagePerDay:F}";
