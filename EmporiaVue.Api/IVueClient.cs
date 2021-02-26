@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EmporiaVue.Api.Models;
 
@@ -40,34 +41,27 @@ namespace EmporiaVue.Api
         Task<DeviceLocation> GetDeviceLocationInfoAsync(long deviceGid);
 
         /// <summary>
-        ///     Gets the total usage for the entire timeframe of the device.
+        ///     Gets the usage over a range of time.
         /// </summary>
         /// <param name="deviceGid">The id of the device.</param>
-        /// <returns></returns>
-        Task<TotalUsageForTimeFrame> GetTotalUsageAsync(long deviceGid);
-
-
-        /// <summary>
-        ///     Gets the usage by time for the current device.
-        /// </summary>
-        /// <param name="deviceGid">The id of the device.</param>
+        /// <param name="channels">The channels to pull.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <param name="scale">1S, 1MIN, 15MIN, 1H</param>
-        /// <param name="unit">USD, WATTS, TREES, GALLONSGAS, MILESDRIVEN, MILESFLOWN</param>
+        /// <param name="unit">KilowattHours, Dollars, AmpHours, Trees, GallonsOfGas, MilesDriven, Carbon</param>
         /// <returns></returns>
-        Task<UsageByTimeRange> GetUsageByTimeRangeAsync(long deviceGid, DateTime startDate,
+        Task<ChartUsage> GetChartUsageAsync(long deviceGid, List<int> channels, DateTime startDate,
             DateTime endDate, string scale, string unit);
 
         /// <summary>
-        ///     Gets the recent device usage for a specified date range.
+        ///     Gets the device usage for a specified date range.
         /// </summary>
-        /// <param name="customerGid">The identifier for the customer.</param>
+        /// <param name="deviceGids">The id of the devices.</param>
         /// <param name="dateToCheck">The date to check.</param>
-        /// <param name="scale">1S, 1MIN, 15MIN, 1H, 1D, 1MON, 1W, 1Y</param>
-        /// <param name="unit">USD, WATTS, TREES, GALLONSGAS, MILESDRIVEN, MILESFLOWN</param>
+        /// <param name="scale">1S, 1MIN, 1H, 1D, 1W, 1MON, 1Y</param>
+        /// <param name="unit">KilowattHours, Dollars, AmpHours, Trees, GallonsOfGas, MilesDriven, Carbon</param>
         /// <returns></returns>
-        Task<RecentUsage> GetRecentDeviceUsageAsync(long customerGid, DateTime dateToCheck,
+        Task<RecentUsage> GetDevicesUsage(List<long> deviceGids, DateTime dateToCheck,
             string scale, string unit);
 
         /// <summary>

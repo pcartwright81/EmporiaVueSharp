@@ -47,14 +47,15 @@ app {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0, #3a0647 70%);
 }
 
     .sidebar .top-row {
+        background-color: #000000;
         background-color: rgba(0,0,0,0.4);
     }
 
-    .sidebar .navbar-brand {
+.sidebar .navbar-brand {
         font-size: 1.1rem;
     }
 
@@ -88,20 +89,23 @@ app {
         }
 
             .sidebar .nav-item a.active {
+                background-color: #ffffff;
                 background-color: rgba(255,255,255,0.25);
                 color: white;
             }
 
-            .sidebar .nav-item a:hover {
-                background-color: rgba(255,255,255,0.1);
+.sidebar .nav-item a:hover {
+    background-color: #ffffff;
+    background-color: rgba(255,255,255,0.1);
                 color: white;
-            }
+}
 
 .content {
     padding-top: 1.1rem;
 }
 
 .navbar-toggler {
+    background-color: #ffffff;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -120,6 +124,7 @@ app {
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
+    box-shadow: 0 -1px 2px #000000;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
     left: 0;
@@ -129,7 +134,7 @@ app {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
+#blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
         right: 0.75rem;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -141,52 +142,50 @@ namespace EmporiaVue.Api
         }
 
         /// <summary>
-        ///     Gets the total usage for the entire timeframe of the device.
+        ///     Gets the usage over a range of time.
         /// </summary>
         /// <param name="deviceGid">The id of the device.</param>
-        /// <returns></returns>
-        public async Task<TotalUsageForTimeFrame> GetTotalUsageAsync(long deviceGid)
-        {
-            // ReSharper disable StringLiteralTypo
-            var url = $"/usage/total?deviceGid={deviceGid}&timeframe=ALLTODATE&unit=WATTHOURS&channels=1%2C2%2C3";
-            // ReSharper restore StringLiteralTypo
-            var totalUsage = await MakeRequest<TotalUsageForTimeFrame>(url);
-
-            return totalUsage;
-        }
-
-        /// <summary>
-        ///     Gets the usage by time for the current device.
-        /// </summary>
-        /// <param name="deviceGid">The id of the device.</param>
+        /// <param name="channels">The channels to pull.</param>
         /// <param name="startDate">The start date.</param>
         /// <param name="endDate">The end date.</param>
         /// <param name="scale">1S, 1MIN, 15MIN, 1H</param>
         /// <param name="unit">USD, WATTS, TREES, GALLONSGAS, MILESDRIVEN, MILESFLOWN</param>
         /// <returns></returns>
-        public async Task<UsageByTimeRange> GetUsageByTimeRangeAsync(long deviceGid, DateTime startDate,
+        public async Task<ChartUsage> GetChartUsageAsync(long deviceGid, List<int> channels, DateTime startDate,
             DateTime endDate, string scale, string unit)
         {
             var url =
-                $"/usage/time?start={startDate:yyyy-MM-ddTHH:mm:ssZ}&end={endDate:yyyy-MM-ddTHH:mm:ssZ}&type=INSTANT&deviceGid={deviceGid}&scale={scale}&unit={unit}&channels=1%2C2%2C3";
+                $"/AppAPI?apiMethod=getChartUsage&deviceGid={deviceGid}&channel={string.Join(",", channels)}&start={startDate:yyyy-MM-ddTHH:mm:ssZ}&end={endDate:yyyy-MM-ddTHH:mm:ssZ}&scale={scale}&energyUnit={unit}";
             url = url.Replace(":", "%3A");
-            var totalUsage = await MakeRequest<UsageByTimeRange>(url);
+            var totalUsage = await MakeRequest<ChartUsage>(url);
             return totalUsage;
         }
 
+
         /// <summary>
-        ///     Gets the recent device usage for a specified date range.
+        ///     Gets the device usage for a specified date range.
         /// </summary>
-        /// <param name="customerGid">The identifier for the customer.</param>
+        /// <param name="deviceGids">The id of the devices.</param>
         /// <param name="dateToCheck">The date to check.</param>
-        /// <param name="scale">1S, 1MIN, 15MIN, 1H, 1D, 1MON, 1W, 1Y</param>
-        /// <param name="unit">USD, WATTS, TREES, GALLONSGAS, MILESDRIVEN, MILESFLOWN</param>
+        /// <param name="scale">1S, 1MIN, 1H, 1D, 1W, 1MON, 1Y</param>
+        /// <param name="unit">KilowattHours, Dollars, AmpHours, Trees, GallonsOfGas, MilesDriven, Carbon</param>
         /// <returns></returns>
-        public async Task<RecentUsage> GetRecentDeviceUsageAsync(long customerGid, DateTime dateToCheck,
+        public async Task<RecentUsage> GetDevicesUsage(List<long> deviceGids, DateTime dateToCheck,
             string scale, string unit)
         {
+            var deviceIds = string.Empty;
+            for (var index = 0; index < deviceGids.Count; index++)
+            {
+                var deviceId = deviceGids[index];
+                deviceIds += "{" + deviceId + "}";
+                if (index < deviceGids.Count - 1)
+                {
+                    deviceIds += "+";
+                }
+            }
+
             var url =
-                $"/usage/devices?start={dateToCheck:yyyy-MM-ddTHH:mm:ssZ}&end={dateToCheck.AddSeconds(1):yyyy-MM-ddTHH:mm:ssZ}&scale={scale}&unit={unit}&customerGid={customerGid}";
+                $"/AppAPI?apiMethod=getDevicesUsage&deviceGids={deviceIds}&instant={dateToCheck:yyyy-MM-ddTHH:mm:ssZ}&scale={scale}&energyUnit={unit}";
             url = url.Replace(":", "%3A");
             var recentUsage = await MakeRequest<RecentUsage>(url);
             return recentUsage;
@@ -205,8 +204,8 @@ namespace EmporiaVue.Api
             var dtNow = DateTime.UtcNow;
             var billDate = GetLastBillDate(billDay);
             var usage = new NextBillEstimate();
-            var usageByTime = await GetUsageByTimeRangeAsync(deviceGid, billDate, dtNow, "1H", "WATTS");
-            usage.UsageSinceDate = usageByTime.Usage.Sum().GetValueOrDefault() / 1000; //add all and convert to KW
+            var usageByTime = await GetChartUsageAsync(deviceGid, new List<int>{1,2,3}, billDate, dtNow, "1H", "KilowattHours");
+            usage.UsageSinceDate = usageByTime.UsageList.Sum();
             usage.UsagePerDay = usage.UsageSinceDate / (dtNow - billDate).TotalDays; //get the total days since last bill
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
             usage.EstimatedUsage = usage.UsagePerDay * totalBillDays;

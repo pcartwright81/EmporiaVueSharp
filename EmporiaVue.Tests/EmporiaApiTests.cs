@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EmporiaVue.Api;
 using Microsoft.Extensions.Configuration;
@@ -69,29 +70,21 @@ namespace EmporiaVue.Tests
             var customerWithDevices = await Client.GetCustomerWithDevicesAsync(customer.CustomerGid);
             return customerWithDevices.Devices[0].DeviceGid;
         }
-
+        
         [TestMethod]
-        public async Task TestTotalUsage()
+        public async Task TestChartUsage()
         {
             var firstDeviceId = await GetFirstDeviceId();
-            var totalUsage = await Client.GetTotalUsageAsync(firstDeviceId);
-            Assert.IsNotNull(totalUsage.DeviceGid);
-        }
-
-        [TestMethod]
-        public async Task TestUsageByTimeRange()
-        {
-            var firstDeviceId = await GetFirstDeviceId();
-            var usageByTimeRange = await Client.GetUsageByTimeRangeAsync(firstDeviceId, DateTime.Now.AddDays(-15), DateTime.Now, "1H", "WATTS");
-            Assert.IsNotNull(usageByTimeRange.DeviceGid);
+            var usageByTimeRange = await Client.GetChartUsageAsync(firstDeviceId, new List<int>{1,2,3}, DateTime.Now.AddDays(-15), DateTime.Now, "1H", "KilowattHours");
+            Assert.IsNotNull(usageByTimeRange.FirstUsageInstant);
         }
 
         [TestMethod]
         public async Task TestRecentUsage()
         {
-            var customerId = await GetCustomerId();
-            var recentUsage = await Client.GetRecentDeviceUsageAsync(customerId, DateTime.Now, "1MON", "WATTS");
-            Assert.IsNotNull(recentUsage.CustomerGid);
+            var firstDeviceId = await GetFirstDeviceId();
+            var recentUsage = await Client.GetDevicesUsage(new List<long>{firstDeviceId}, DateTime.Now, "1MON", "KilowattHours");
+            Assert.IsNotNull(recentUsage.ChannelUsages.Count > 0);
         }
 
         [TestMethod]
