@@ -1,5 +1,5 @@
 # EmporiaVueSharp
-C# Port of PyEmVue
+C# Port of <a href="https://github.com/magico13/PyEmVue">PyEmVue</a>
 
 Right click on project and manage user secrets.
 
