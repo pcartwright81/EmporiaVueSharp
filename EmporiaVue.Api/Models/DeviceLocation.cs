@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace EmporiaVue.Api.Models
 {
     public class DeviceLocation
     {
+        [JsonProperty("billingCycleStartDay")]
+        public int BillingCycleStartDay { get; set; }
+
         [JsonProperty("deviceGid")]
         public long DeviceGid { get; set; }
 

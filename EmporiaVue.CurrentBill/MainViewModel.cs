@@ -81,59 +81,7 @@ namespace EmporiaVue.CurrentBill
             TokenSource2 = new CancellationTokenSource();
             Task.Run(GetData, TokenSource2.Token);
         }
-
-        public long CustomerGid
-        {
-            get
-            {
-                const string key = "CustomerGid";
-                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
-                if (long.TryParse(customerGidStr, out var customerGid))
-                {
-                    return customerGid;
-                }
-
-                var userName = SecureStorage.GetAsync("UserName").GetAwaiter().GetResult();
-                var customer = ClientVue.GetCustomerInfoAsync(userName).GetAwaiter().GetResult();
-                SecureStorage.SetAsync(key, customer.CustomerGid.ToString()).GetAwaiter().GetResult();
-                return customer.CustomerGid;
-            }
-        }
-
-        public long DeviceGid
-        {
-            get
-            {
-                const string key = "DeviceGid";
-                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
-                if (long.TryParse(customerGidStr, out var customerGid))
-                {
-                    return customerGid;
-                }
-                var customerWithDevices = ClientVue.GetCustomerWithDevicesAsync(CustomerGid).GetAwaiter().GetResult();
-                var deviceGid = customerWithDevices.Devices[0].DeviceGid;
-                SecureStorage.SetAsync(key, deviceGid.ToString()).GetAwaiter().GetResult();
-                return deviceGid;
-            }
-        }
-
-        public long KwCost
-        {
-            get
-            {
-                const string key = "KWCost";
-                var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
-                if (long.TryParse(customerGidStr, out var customerGid))
-                {
-                    return customerGid;
-                }
-                var locationInfo = ClientVue.GetDeviceLocationInfoAsync(DeviceGid).GetAwaiter().GetResult();
-                var kwCost = locationInfo.UsageCentPerKwHour;
-                SecureStorage.SetAsync(key, kwCost.ToString()).GetAwaiter().GetResult();
-                return kwCost;
-            }
-        }
-
+        
         public VueClient ClientVue { get; set; }
         private async Task GetData()
         {
@@ -147,11 +95,65 @@ namespace EmporiaVue.CurrentBill
                 throw new Exception("Login Failed");
             }
 
-            var nextBill = await ClientVue.EstimateNextBill(DeviceGid, 25, KwCost);
+            var deviceGid = GetDeviceId();
+            var (billDay, costPerKwHour) = GetBillingInfo(deviceGid);
+            
+            var nextBill = await ClientVue.EstimateNextBill(deviceGid, billDay, costPerKwHour);
             Usage = $"{nextBill.UsageSinceDate:F}";
             Estimated = $"{nextBill.EstimatedUsage:F}";
             Average = $"{nextBill.UsagePerDay:F}";
             Total = $"{nextBill.EstimatedCost:F}";
+        }
+
+        private Tuple<int, long> GetBillingInfo(long deviceGid)
+        {
+            const string billDayKey = "BillDay";
+            const string kwCostKey = "KWCost";
+            long kwCost;
+            var billDayStr = SecureStorage.GetAsync(billDayKey).GetAwaiter().GetResult();
+            if (!int.TryParse(billDayStr, out var billDay))
+            {
+                var locationInfo = ClientVue.GetDeviceLocationInfoAsync(deviceGid).GetAwaiter().GetResult();
+                billDay = locationInfo.BillingCycleStartDay;
+                kwCost = locationInfo.UsageCentPerKwHour;
+                SecureStorage.SetAsync(billDayKey, billDay.ToString()).GetAwaiter().GetResult();
+                SecureStorage.SetAsync(kwCostKey, kwCost.ToString()).GetAwaiter().GetResult();
+                return new Tuple<int, long>(billDay, kwCost);
+            }
+            var kwCostStr = SecureStorage.GetAsync(kwCostKey).GetAwaiter().GetResult();
+            if (long.TryParse(kwCostStr, out kwCost)) return new Tuple<int, long>(billDay, kwCost);
+            {
+                var locationInfo = ClientVue.GetDeviceLocationInfoAsync(deviceGid).GetAwaiter().GetResult();
+                billDay = locationInfo.BillingCycleStartDay;
+                kwCost = locationInfo.UsageCentPerKwHour;
+                SecureStorage.SetAsync(billDayKey, billDay.ToString()).GetAwaiter().GetResult();
+                SecureStorage.SetAsync(kwCostKey, kwCost.ToString()).GetAwaiter().GetResult();
+                return new Tuple<int, long>(billDay, kwCost);
+            }
+        }
+
+        private long GetDeviceId()
+        {
+            var key = "CustomerGid";
+            var customerGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
+            if (!long.TryParse(customerGidStr, out var customerGid))
+            {
+                var userName = SecureStorage.GetAsync("UserName").GetAwaiter().GetResult();
+                var customer = ClientVue.GetCustomerInfoAsync(userName).GetAwaiter().GetResult();
+                customerGid = customer.CustomerGid;
+                SecureStorage.SetAsync(key, customerGid.ToString()).GetAwaiter().GetResult();
+            }
+            key = "DeviceGid";
+            var deviceGidStr = SecureStorage.GetAsync(key).GetAwaiter().GetResult();
+            if (long.TryParse(deviceGidStr, out var deviceGid))
+            {
+                return deviceGid;
+            }
+            var customerWithDevices = ClientVue.GetCustomerWithDevicesAsync(customerGid).GetAwaiter().GetResult();
+            deviceGid = customerWithDevices.Devices[0].DeviceGid;
+            SecureStorage.SetAsync(key, deviceGid.ToString()).GetAwaiter().GetResult();
+            return deviceGid;
+
         }
 
         private async void LogoutAsync()
