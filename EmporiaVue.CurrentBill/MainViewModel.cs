@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using EmporiaVue.Api;
+using EmporiaVue.Api.Models;
 using JetBrains.Annotations;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -14,10 +15,7 @@ namespace EmporiaVue.CurrentBill
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private string _average;
-        private string _estimated;
-        private string _total;
-        private string _usage;
+        private NextBillEstimate _nextBill;
 
         public MainViewModel()
         {
@@ -30,50 +28,17 @@ namespace EmporiaVue.CurrentBill
 
         public ICommand RefreshCommand => new Command(RefreshAsync);
 
-        public string Total
+        public NextBillEstimate NextBill
         {
-            get => _total;
+            get => _nextBill;
             set
             {
-                if (value == _total) return;
-                _total = value;
+                if (value == _nextBill) return;
+                _nextBill = value;
                 OnPropertyChanged();
             }
         }
-
-        public string Average
-        {
-            get => _average;
-            set
-            {
-                if (value == _average) return;
-                _average = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Estimated
-        {
-            get => _estimated;
-            set
-            {
-                if (value == _estimated) return;
-                _estimated = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string Usage
-        {
-            get => _usage;
-            set
-            {
-                if (value == _usage) return;
-                _usage = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RefreshAsync()
@@ -98,11 +63,7 @@ namespace EmporiaVue.CurrentBill
             var deviceGid = GetDeviceId();
             var (billDay, costPerKwHour) = GetBillingInfo(deviceGid);
             
-            var nextBill = await ClientVue.EstimateNextBill(deviceGid, billDay, costPerKwHour);
-            Usage = $"{nextBill.UsageSinceDate:F}";
-            Estimated = $"{nextBill.EstimatedUsage:F}";
-            Average = $"{nextBill.UsagePerDay:F}";
-            Total = $"{nextBill.EstimatedCost:F}";
+            NextBill = await ClientVue.EstimateNextBill(deviceGid, billDay, costPerKwHour);
         }
 
         private Tuple<int, long> GetBillingInfo(long deviceGid)

@@ -11,13 +11,15 @@
 	<ContentPage.Content>
 		<StackLayout>
             <Label Text="Usage since last bill:"/>
-            <Entry Text="{Binding Usage}" IsReadOnly="True"></Entry>
-            <Label Text="Estimated usage:"/>
-            <Entry Text="{Binding Estimated}" IsReadOnly="True"></Entry>
+            <Entry Text="{Binding NextBill.Usage, StringFormat='{0:F2}'}" IsReadOnly="True"></Entry>
+            <Label Text="Usage cost since last bill:"/>
+            <Entry Text="{Binding NextBill.UsageCost, StringFormat='${0:F2}'}" IsReadOnly="True"></Entry>
             <Label Text="Average usage per day:"/>
-            <Entry Text="{Binding Average}"  IsReadOnly="True"></Entry>
+            <Entry Text="{Binding NextBill.UsagePerDay, StringFormat='{0:F2}'}"  IsReadOnly="True"></Entry>
+            <Label Text="Estimated usage:"/>
+            <Entry Text="{Binding NextBill.EstimatedUsage, StringFormat='{0:F2}'}" IsReadOnly="True"></Entry>
             <Label Text="Total estimated bill:"/>
-            <Entry Text="{Binding Total}"  IsReadOnly="True"></Entry>
+            <Entry Text="{Binding NextBill.EstimatedCost, StringFormat='${0:F2}'}"  IsReadOnly="True"></Entry>
             <Button Text="Refresh" Command="{Binding RefreshCommand}" />
         </StackLayout>
 	</ContentPage.Content>

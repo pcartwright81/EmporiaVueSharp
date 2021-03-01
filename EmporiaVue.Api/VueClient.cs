@@ -205,8 +205,9 @@ namespace EmporiaVue.Api
             var billDate = GetLastBillDate(billDay);
             var usage = new NextBillEstimate();
             var usageByTime = await GetChartUsageAsync(deviceGid, new List<int>{1,2,3}, billDate, dtNow, "1H", "KilowattHours");
-            usage.UsageSinceDate = usageByTime.UsageList.Sum();
-            usage.UsagePerDay = usage.UsageSinceDate / (dtNow - billDate).TotalDays; //get the total days since last bill
+            usage.Usage = usageByTime.UsageList.Sum();
+            usage.UsageCost = usage.Usage * costPerKwHour / 100;
+            usage.UsagePerDay = usage.Usage / (dtNow - billDate).TotalDays; //get the total days since last bill
             var totalBillDays = (billDate.AddMonths(1) - billDate).TotalDays;
             usage.EstimatedUsage = usage.UsagePerDay * totalBillDays;
             usage.EstimatedCost = usage.EstimatedUsage * costPerKwHour / 100;
