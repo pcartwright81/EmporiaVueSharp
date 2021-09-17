@@ -25,10 +25,10 @@ namespace EmporiaVue.Blazor.Data
             var customer = await Client.GetCustomerInfoAsync(Configuration["email"]);
             var customerWithDevices = await Client.GetCustomerWithDevicesAsync(customer.CustomerGid);
             var usageList = await Client.GetChartUsageAsync(customerWithDevices.Devices[0].DeviceGid, new List<int>{1,2,3},
-                DateTime.UtcNow.AddDays(-2).Date, DateTime.Now.ToUniversalTime(), scale, "KilowattHours");
+                DateTime.UtcNow.AddDays(-15).Date, DateTime.Now.ToUniversalTime(), scale, "KilowattHours");
             var listReturn = new List<EmporiaUsage>();
             var counter =
-                TimeZoneInfo.ConvertTime(usageList.FirstUsageInstant, TimeZoneInfo.FindSystemTimeZoneById("America/Chicago"));
+                TimeZoneInfo.ConvertTime(usageList.FirstUsageInstant, TimeZoneInfo.Local);
             foreach (var usage in usageList.UsageList)
             {
                 listReturn.Add(new EmporiaUsage(counter, usage));

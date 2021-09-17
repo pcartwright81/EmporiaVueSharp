@@ -88,9 +88,9 @@ namespace EmporiaVue.Api
         /// </summary>
         /// <param name="emailAddress">The email address of the user.</param>
         /// <returns></returns>
-        public async Task<Customer> GetCustomerInfoAsync(string emailAddress)
+        public async Task<Customer> GetCustomerInfoAsync(string email)
         {
-            var customer = await MakeRequest<Customer>($"/customers?email={emailAddress}");
+            var customer = await MakeRequest<Customer>($"/customers?email={email}");
             return customer;
         }
 
