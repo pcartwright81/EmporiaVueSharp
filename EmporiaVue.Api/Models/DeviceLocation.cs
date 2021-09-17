@@ -29,6 +29,9 @@ namespace EmporiaVue.Api.Models
         [JsonProperty("solar")]
         public bool Solar { get; set; }
 
+        [JsonProperty("utilityRateGid")]
+        public string UtilityRateGid { get; set; }
+
         [JsonProperty("locationInformation")]
         public LocationInformation LocationInformation { get; set; }
     }

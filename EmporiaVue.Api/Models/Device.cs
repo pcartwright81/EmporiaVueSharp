@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace EmporiaVue.Api.Models
 {
@@ -21,5 +22,8 @@ namespace EmporiaVue.Api.Models
 
         [JsonProperty("channels")]
         public Channel[] Channels { get; set; }
+
+        [JsonProperty("offlineSince")]
+        public DateTime OfflineSince { get; set; }
     }
 }

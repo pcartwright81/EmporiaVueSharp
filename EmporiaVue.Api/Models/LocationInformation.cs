@@ -18,5 +18,14 @@ namespace EmporiaVue.Api.Models
 
         [JsonProperty("numPeople")]
         public long NumPeople { get; set; }
+
+        [JsonProperty("locationSqFt")]
+        public long LocationSqFt { get; set; }
+
+        [JsonProperty("hotTub")]
+        public bool HotTub { get; set; }
+
+        [JsonProperty("latitudeLongitude")]
+        public LatitudeLongitude LatitudeLongitude { get;set;}
     }
 }

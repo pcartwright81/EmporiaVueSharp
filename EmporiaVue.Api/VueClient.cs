@@ -102,7 +102,7 @@ namespace EmporiaVue.Api
         public async Task<Customer> GetCustomerWithDevicesAsync(long customerGid)
         {
             var customer =
-                await MakeRequest<Customer>($"/customers/{customerGid}/devices?detailed=true&hierarchy=true");
+                await MakeRequest<Customer>($"/customers/devices");
             return customer;
         }
 
@@ -170,7 +170,7 @@ namespace EmporiaVue.Api
         /// <param name="scale">1S, 1MIN, 1H, 1D, 1W, 1MON, 1Y</param>
         /// <param name="unit">KilowattHours, Dollars, AmpHours, Trees, GallonsOfGas, MilesDriven, Carbon</param>
         /// <returns></returns>
-        public async Task<RecentUsage> GetDevicesUsage(List<long> deviceGids, DateTime dateToCheck,
+        public async Task<DeviceListUsage> DeviceListUsages(List<long> deviceGids, DateTime dateToCheck,
             string scale, string unit)
         {
             var deviceIds = string.Empty;
@@ -185,9 +185,9 @@ namespace EmporiaVue.Api
             }
 
             var url =
-                $"/AppAPI?apiMethod=getDevicesUsage&deviceGids={deviceIds}&instant={dateToCheck:yyyy-MM-ddTHH:mm:ssZ}&scale={scale}&energyUnit={unit}";
+                $"/AppAPI?apiMethod=getDeviceListUsages&deviceGids={deviceIds}&instant={dateToCheck:yyyy-MM-ddTHH:mm:ssZ}&scale={scale}&energyUnit={unit}";
             url = url.Replace(":", "%3A");
-            var recentUsage = await MakeRequest<RecentUsage>(url);
+            var recentUsage = await MakeRequest<DeviceListUsage>(url);
             return recentUsage;
         }
 

@@ -61,7 +61,7 @@ namespace EmporiaVue.Api
         /// <param name="scale">1S, 1MIN, 1H, 1D, 1W, 1MON, 1Y</param>
         /// <param name="unit">KilowattHours, Dollars, AmpHours, Trees, GallonsOfGas, MilesDriven, Carbon</param>
         /// <returns></returns>
-        Task<RecentUsage> GetDevicesUsage(List<long> deviceGids, DateTime dateToCheck,
+        Task<DeviceListUsage> DeviceListUsages(List<long> deviceGids, DateTime dateToCheck,
             string scale, string unit);
 
         /// <summary>

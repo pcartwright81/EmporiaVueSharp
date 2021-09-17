@@ -80,11 +80,11 @@ namespace EmporiaVue.Tests
         }
 
         [TestMethod]
-        public async Task TestRecentUsage()
+        public async Task TestDeviceListUsages()
         {
             var firstDeviceId = await GetFirstDeviceId();
-            var recentUsage = await Client.GetDevicesUsage(new List<long>{firstDeviceId}, DateTime.Now, "1MON", "KilowattHours");
-            Assert.IsNotNull(recentUsage.ChannelUsages.Count > 0);
+            var recentUsage = await Client.DeviceListUsages(new List<long>{firstDeviceId}, DateTime.Now, "1MON", "KilowattHours");
+            Assert.IsNotNull(recentUsage.DeviceListUsages.Devices.Count > 0);
         }
 
         [TestMethod]
