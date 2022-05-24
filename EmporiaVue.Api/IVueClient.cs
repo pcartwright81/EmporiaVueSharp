@@ -22,9 +22,9 @@ namespace EmporiaVue.Api
         /// <summary>
         ///     Gets the customer information from the API.
         /// </summary>
-        /// <param name="email">The email address of the user.</param>
+        /// <param name="emailAddress">The email address of the user.</param>
         /// <returns></returns>
-        Task<Customer> GetCustomerInfoAsync(string email);
+        Task<Customer> GetCustomerInfoAsync(string emailAddress);
 
         /// <summary>
         ///     Gets the customer information from the API including the devices.
