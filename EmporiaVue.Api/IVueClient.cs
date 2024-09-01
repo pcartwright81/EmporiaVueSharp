@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using EmporiaVue.Api.Models;
-
-namespace EmporiaVue.Api
+﻿namespace EmporiaVue.Api
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using EmporiaVue.Api.Models;
+
     public interface IVueClient
     {
         /// <summary>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using EmporiaVue.Api;
-using Microsoft.Extensions.Configuration;
-
-namespace EmporiaVue.TestConsole
+﻿namespace EmporiaVue.TestConsole
 {
+    using System;
+    using System.Threading.Tasks;
+    using EmporiaVue.Api;
+    using Microsoft.Extensions.Configuration;
+
     internal class Program
     {
         private static async Task Main()

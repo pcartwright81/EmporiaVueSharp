@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Amazon;
-using Amazon.CognitoIdentityProvider;
-using Amazon.CognitoIdentityProvider.Model;
-using Amazon.Extensions.CognitoAuthentication;
-using Amazon.Runtime;
-using EmporiaVue.Api.Models;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-
-namespace EmporiaVue.Api
+﻿namespace EmporiaVue.Api
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using Amazon;
+    using Amazon.CognitoIdentityProvider;
+    using Amazon.CognitoIdentityProvider.Model;
+    using Amazon.Extensions.CognitoAuthentication;
+    using Amazon.Runtime;
+    using EmporiaVue.Api.Models;
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+
     public class VueClient : IVueClient
     {
         /// <summary>
@@ -204,7 +204,7 @@ namespace EmporiaVue.Api
             var dtNow = DateTime.UtcNow;
             var billDate = GetLastBillDate(billDay);
             var usage = new NextBillEstimate();
-            var usageByTime = await GetChartUsageAsync(deviceGid, new List<int>{1,2,3}, billDate, dtNow, "1H", "KilowattHours");
+            var usageByTime = await GetChartUsageAsync(deviceGid, [1,2,3], billDate, dtNow, "1H", "KilowattHours");
             usage.Usage = usageByTime.UsageList.Sum();
             usage.UsageCost = usage.Usage * costPerKwHour / 100;
             usage.UsagePerDay = usage.Usage / (dtNow - billDate).TotalDays; //get the total days since last bill

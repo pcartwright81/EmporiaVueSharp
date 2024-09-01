@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using EmporiaVue.Api;
-using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace EmporiaVue.Tests
 {
+    using System;
+    using System.Threading.Tasks;
+    using EmporiaVue.Api;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class EmporiaApiTests
     {
-        private IVueClient Client { get; }
+        private VueClient Client { get; }
 
         private readonly IConfiguration _configuration;
 
@@ -75,7 +74,7 @@ namespace EmporiaVue.Tests
         public async Task TestChartUsage()
         {
             var firstDeviceId = await GetFirstDeviceId();
-            var usageByTimeRange = await Client.GetChartUsageAsync(firstDeviceId, new List<int>{1,2,3}, DateTime.Now.AddDays(-15), DateTime.Now, "1H", "KilowattHours");
+            var usageByTimeRange = await Client.GetChartUsageAsync(firstDeviceId, [1,2,3], DateTime.Now.AddDays(-15), DateTime.Now, "1H", "KilowattHours");
             Assert.IsNotNull(usageByTimeRange.FirstUsageInstant);
         }
 
@@ -83,7 +82,7 @@ namespace EmporiaVue.Tests
         public async Task TestDeviceListUsages()
         {
             var firstDeviceId = await GetFirstDeviceId();
-            var recentUsage = await Client.DeviceListUsages(new List<long>{firstDeviceId}, DateTime.Now, "1MON", "KilowattHours");
+            var recentUsage = await Client.DeviceListUsages([firstDeviceId], DateTime.Now, "1MON", "KilowattHours");
             Assert.IsNotNull(recentUsage.DeviceListUsages.Devices.Count > 0);
         }
 

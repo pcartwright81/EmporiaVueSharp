@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace EmporiaVue.Api.Models
+﻿namespace EmporiaVue.Api.Models
 {
+    using Newtonsoft.Json;
+
     public class DeviceListUsage
     {
         [JsonProperty("deviceListUsages")]

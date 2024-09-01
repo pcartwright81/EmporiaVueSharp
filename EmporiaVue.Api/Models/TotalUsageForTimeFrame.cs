@@ -1,8 +1,8 @@
-﻿using System;
-using Newtonsoft.Json;
-
-namespace EmporiaVue.Api.Models
+﻿namespace EmporiaVue.Api.Models
 {
+    using System;
+    using Newtonsoft.Json;
+
     public class TotalUsageForTimeFrame
     {
         [JsonProperty("timeframeStart")]

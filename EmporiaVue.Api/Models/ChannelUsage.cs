@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-
-namespace EmporiaVue.Api.Models
+﻿namespace EmporiaVue.Api.Models
 {
+    using System.Collections.Generic;
+    using Newtonsoft.Json;
+
     public class ChannelUsage
     {
         [JsonProperty("name")]
