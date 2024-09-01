@@ -7,17 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.Blazor", "EmporiaVue.Blazor\EmporiaVue.Blazor.csproj", "{37E2C88B-9803-4473-A76F-923CD0A25849}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.Tests", "EmporiaVue.Tests\EmporiaVue.Tests.csproj", "{4A96A4AA-E073-4318-9DA1-305BFF8A21B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.Api", "EmporiaVue.Api\EmporiaVue.Api.csproj", "{A1F583E6-B8EF-4257-8715-EF4184FFAC5B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.TestConsole", "EmporiaVue.TestConsole\EmporiaVue.TestConsole.csproj", "{923900DC-E4F2-42B9-9F38-9337CE88FC7B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.CurrentBill", "EmporiaVue.CurrentBill\EmporiaVue.CurrentBill.csproj", "{1CDCDB02-F611-4728-A5A3-D29FA56F4E19}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmporiaVue.CurrentBill.Android", "EmporiaVue.CurrentBill.Android\EmporiaVue.CurrentBill.Android.csproj", "{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37E2C88B-9803-4473-A76F-923CD0A25849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37E2C88B-9803-4473-A76F-923CD0A25849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37E2C88B-9803-4473-A76F-923CD0A25849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37E2C88B-9803-4473-A76F-923CD0A25849}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A96A4AA-E073-4318-9DA1-305BFF8A21B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A96A4AA-E073-4318-9DA1-305BFF8A21B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A96A4AA-E073-4318-9DA1-305BFF8A21B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,15 +31,6 @@ Global
 		{923900DC-E4F2-42B9-9F38-9337CE88FC7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{923900DC-E4F2-42B9-9F38-9337CE88FC7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{923900DC-E4F2-42B9-9F38-9337CE88FC7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CDCDB02-F611-4728-A5A3-D29FA56F4E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CDCDB02-F611-4728-A5A3-D29FA56F4E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CDCDB02-F611-4728-A5A3-D29FA56F4E19}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9AD2E0F6-903B-4DF4-9288-4421BBCDF8FB}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
