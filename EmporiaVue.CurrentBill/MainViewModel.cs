@@ -8,8 +8,10 @@ using System.Windows.Input;
 using EmporiaVue.Api;
 using EmporiaVue.Api.Models;
 using JetBrains.Annotations;
-using Xamarin.Essentials;
-using Xamarin.Forms;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui;
+using Microsoft.Maui.Storage;
 
 namespace EmporiaVue.CurrentBill
 {
