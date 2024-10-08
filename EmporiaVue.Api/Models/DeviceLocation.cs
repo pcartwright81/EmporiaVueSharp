@@ -23,7 +23,7 @@
         public long UsageCentPerKwHour { get; set; }
 
         [JsonProperty("peakDemandDollarPerKw")]
-        public long PeakDemandDollarPerKw { get; set; }
+        public long? PeakDemandDollarPerKw { get; set; }
 
         [JsonProperty("solar")]
         public bool Solar { get; set; }

@@ -10,6 +10,6 @@
         public DateTime FirstUsageInstant { get; set; }
 
         [JsonProperty("usageList")]
-        public List<double> UsageList { get; set; }
+        public List<double?> UsageList { get; set; }
     }
 }
