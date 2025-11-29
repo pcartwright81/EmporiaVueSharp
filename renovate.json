@@ -1,0 +1,10 @@
+{
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "groupName": "Weekly Automated Updates",
+      "schedule": ["on Sunday at 23:00"]
+    }
+  ]
+}
