@@ -5,7 +5,7 @@
     <UserSecretsId>4af7f58f-3abf-4eb9-94fb-1a7561f50a5d</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="2.5.5" />
+    <PackageReference Include="Amazon.Extensions.CognitoAuthentication" Version="3.1.2" />
     <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="112.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
